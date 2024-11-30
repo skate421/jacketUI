@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import Card from '../Card'
+import CartCard from '../CartCard'
 import {useCookies} from 'react-cookie';
 import { Link } from 'react-router-dom';
 
@@ -9,12 +9,19 @@ export default function Cart(){
   const apiHost = import.meta.env.VITE_API_HOST;
   const apiUrl = apiHost + '/api/jacket/products/';
 
+  function onlyUnique(value, index, array) {
+    return array.indexOf(value) === index;
+  }//https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
+  
+
   useEffect(() => {
     // Fetch data for all IDs
     async function fetchData() {
       if (!cookies.item) return;
 
-      const cookArray = cookies.item.split(',');
+      var cookArray = cookies.item.split(',');
+      
+      cookArray = cookArray.filter(onlyUnique);
       
         const responses = await Promise.all(
           cookArray.map(id => fetch(apiUrl + id))
@@ -36,7 +43,7 @@ export default function Cart(){
         {
             jackets.length > 0 ?
             jackets.map(jacket =>(
-                <Card 
+                <CartCard 
                     key={jacket.product_id}
                     jacket={jacket} name={jacket.name} 
                     description={jacket.description} 
