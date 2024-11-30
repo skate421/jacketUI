@@ -32,6 +32,27 @@ export default function Details(){
    }
  }, []);
 
+ // form submit function
+ async function formSubmit(data) {
+  const url = 'http://localhost:3000/api/users/login';
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data),
+    credentials: 'include' //Make fetch include cookies in the request
+  });
+  
+  if(response.ok){
+    window.location.href = '/'; //Redirect to home page
+  }
+  else{
+    setLoginFail(true); //Show login fail message
+  }
+}
+
   if(!isNaN(id) && jacket){
   return (
     <>
@@ -42,8 +63,9 @@ export default function Details(){
           <div><h5>${jacket.cost}</h5></div>
           <div className="mt-2">{jacket.description || "N/A"}</div>
           <div className="mt-2">Product ID: {jacket.product_id}</div>
-          <Link to={"/"}><div className="mt-2">HOME</div></Link>
-          <Link to={"/cart"}><div className="mt-2">ADD TO CART</div></Link>
+          <Link to={"/"}><div className="mt-2 mt-2 btn btn-primary">HOME</div></Link>
+          <br/>
+          <Link to={"/cart"}><div className="mt-2 btn btn-primary">ADD TO CART</div></Link>
 </div>
 
       </div>
