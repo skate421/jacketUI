@@ -9,33 +9,45 @@ export default function Cart(){
   const apiHost = import.meta.env.VITE_API_HOST;
   const apiUrl = apiHost + '/api/jacket/products/';
 
-  function onlyUnique(value, index, array) {
-    return array.indexOf(value) === index;
-  }//https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
-  
-
   useEffect(() => {
-    // Fetch data for all IDs
     async function fetchData() {
       if (!cookies.item) return;
 
-      var cookArray = cookies.item.split(',');
-      
-      cookArray = cookArray.filter(onlyUnique);
-      
-        const responses = await Promise.all(
-          cookArray.map(id => fetch(apiUrl + id))
-        );
+      //Split comma separated cookies
+      const cookArray = cookies.item.split(',');
 
-        const data = await Promise.all(
-          responses.map(response => response.ok ? response.json() : null)
-        );
+      const counts = {};
+      cookArray.forEach(id => {
+        counts[id] = (counts[id] || 0) + 1;
+      });//https://stackoverflow.com/questions/19395257/how-to-count-duplicate-value-in-an-array-in-javascript
 
-        setJackets(data.filter(jacket => jacket !== null));
+      const uniqueIds = [...new Set(cookArray)];
+
+      const responses = await Promise.all(
+        uniqueIds.map(id => fetch(apiUrl + id))
+      );
+
+      const data = await Promise.all(
+        responses.map((response, index) => {
+          if (response.ok) {
+            return response.json().then(jacket => ({
+              ...jacket,
+              quantity: counts[uniqueIds[index]],
+            }));
+          }
+          return null;
+        })
+      );
+
+      setJackets(data.filter(jacket => jacket !== null));
     }
 
     fetchData();
   }, [cookies.item]);
+
+  const totalCost = jackets.reduce((total, jacket) => {
+    return total + jacket.cost * jacket.quantity;
+  }, 0);
 
     return(
         <>
@@ -47,10 +59,12 @@ export default function Cart(){
                     key={jacket.product_id}
                     jacket={jacket} name={jacket.name} 
                     description={jacket.description} 
+                    quantity={jacket.quantity}
                     apiHost={apiHost}/>
             )) :
             <p>No jackets.</p>
         }
+        <p>Total: ${totalCost.toFixed(2)}</p>
         <Link to="/" className="me-3"><h5>Continute shopping</h5></Link> 
         <Link to="/checkout" className="me-3"><h5>Checkout</h5></Link>
         </>

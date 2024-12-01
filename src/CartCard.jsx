@@ -18,9 +18,9 @@ export default function Card(props){
                                     <br/>
                                     Price: ${props.jacket.cost || "N/A"}  
                                     <br/>
-                                    Quantity:
+                                    Quantity: {props.jacket.quantity}
                                     <br/>
-                                    Total:
+                                    Sub-total: ${(props.jacket.cost * props.jacket.quantity).toFixed(2)}
                                 </p>
                             </div>
                         </div>
