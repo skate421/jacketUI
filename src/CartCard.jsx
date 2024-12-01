@@ -7,7 +7,7 @@ export default function Card(props){
     displayImg = apiHost + "/" + props.jacket.image_filename;
 
     return(
-                <div style={{ backgroundColor: '#d1d8e3' }} className="card">
+                <div style={{ backgroundColor: '#edafab' }} className="card">
                     <div className="card-body">
                         <div className="d-flex align-items-center position-relative">
                             <img alt={props.jacket.description} src={displayImg} width={100} className="m-3"/>
