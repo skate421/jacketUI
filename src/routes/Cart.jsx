@@ -46,6 +46,7 @@ export default function Cart(){
   }, [cookies.item]);
 
   const totalCost = jackets.reduce((total, jacket) => {
+    console.log(jacket.cost);
     return total + jacket.cost * jacket.quantity;
   }, 0);
 

@@ -45,7 +45,7 @@ export default function Details(){
   return (
     <>
       <h1 className="mt-5 d-flex justify-content-center align-items-center">{jacket.name}</h1>
-      <div className="card mt-3" class=" d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center">
         <img className="me-3" width={200} src={apiHost + "/" + jacket.image_filename}/>
         <div className="artist-info">
           <div><h5>${jacket.cost}</h5></div>
