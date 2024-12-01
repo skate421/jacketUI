@@ -17,11 +17,9 @@ export default function Details(){
     }
    }
 
-  // Store the result from API
   const [jacket, setJacket] = useState(null);
 
   useEffect(() => {
-   // Fetch data from API
    async function fetchJacket() {     
      const response = await fetch(getUrl);
      if(response.ok){ 
