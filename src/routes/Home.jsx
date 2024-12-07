@@ -31,7 +31,8 @@ export default function Home(){
 
     return(
         <>
-        <h1>Home</h1>
+        <h2 className="text-center mt-3 mb-4">ALL JACKETS</h2>
+        <div className="d-flex flex-wrap justify-content-center align-items-start text-center">
         {
             jackets.length > 0 ?
             jackets.map(jacket =>(
@@ -43,6 +44,7 @@ export default function Home(){
             )) :
             <p>No jackets.</p>
         }
+        </div>
         </>
     )
 }

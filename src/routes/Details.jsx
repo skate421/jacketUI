@@ -42,24 +42,17 @@ export default function Details(){
   if(!isNaN(id) && jacket){
   return (
     <>
-      <h1 className="mt-5 d-flex justify-content-center align-items-center">{jacket.name}</h1>
+      <h2 className="mt-3 mb-4 d-flex justify-content-center align-items-center">{jacket.name}</h2>
       <div className="d-flex justify-content-center align-items-center">
         <img className="me-3" width={200} src={apiHost + "/" + jacket.image_filename}/>
         <div className="artist-info">
           <div><h5>${jacket.cost}</h5></div>
           <div className="mt-2">{jacket.description || "N/A"}</div>
-          <div className="mt-2">Product ID: {jacket.product_id}</div>
-          <Link to={"/"}><div className="mt-2 mt-2 btn btn-primary">HOME</div></Link>
+          <Link to={"/"}><div className="mt-2 mt-2 btn btn-secondary">HOME</div></Link>
           <br/>
           <Link to={"/cart"}><button className="mt-2 btn btn-primary" onClick={() => addCookie(jacket.product_id)}>ADD TO CART</button></Link>
 </div>
       </div>
-    </>
-  )
-}else{
-  return (
-    <>
-      <h1>Details</h1>
     </>
   )
 }

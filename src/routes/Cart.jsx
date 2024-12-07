@@ -57,7 +57,9 @@ export default function Cart(){
 
     return(
         <>
-        <h1>Cart</h1>
+        <h2 className="text-center mt-3 mb-4">CART</h2>
+        <div className="d-flex flex-column justify-content-center align-items-center">
+        <div className="d-flex flex-wrap justify-content-center align-items-center text-center">
         {
             jackets.length > 0 ?
             jackets.map(jacket =>(
@@ -68,11 +70,13 @@ export default function Cart(){
                     quantity={jacket.quantity}
                     apiHost={apiHost}/>
             )) :
-            <p>No jackets.</p>
+            <p>Your cart is empty</p>
         }
-        <p>Total: ${totalCost.toFixed(2)}</p>
-        <Link to="/" className="me-3"><h5>Continute shopping</h5></Link> 
-        <Link to="/checkout" className="me-3"><h5>Checkout</h5></Link>
+        </div>
+        <h5 className="mt-3">TOTAL: ${totalCost.toFixed(2)}</h5>
+        <Link to="/" className="btn btn-secondary mt-1"><h5>Continute shopping</h5></Link> 
+        <Link to="/checkout" className="btn btn-primary mt-2"><h5>Checkout</h5></Link>
+        </div>
         </>
     )
 }
