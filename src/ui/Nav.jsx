@@ -12,10 +12,10 @@ function Nav() {
           </div>
 
           <div className="d-flex flex-wrap justify-content-center mx-3">
-            <Link to="/" className="mx-3"><h2 className="text-white">Home</h2></Link>
-            <Link to="/cart" className="mx-3"><h2 className="text-white">Cart</h2></Link>
+            <Link to="/" className="mx-3"><h2 className="text-white"><i className="bi bi-house"></i>Home</h2></Link>
+            <Link to="/cart" className="mx-3"><h2 className="text-white"><i className="bi bi-cart"></i>Cart</h2></Link>
+            <Link to="/signup" className="mx-3"><h2 className="text-white"><i className="bi bi-pencil"></i>Signup</h2></Link>
             <Link to="/login" className="mx-3"><h2 className="text-white">Login</h2></Link>
-            <Link to="/signup" className="mx-3"><h2 className="text-white">Signup</h2></Link>
             <Link to="/logout" className="mx-3"><h2 className="text-white">Logout</h2></Link>
           </div>
           

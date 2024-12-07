@@ -48,9 +48,11 @@ export default function Details(){
         <div className="artist-info">
           <div><h5>${jacket.cost}</h5></div>
           <div className="mt-2">{jacket.description || "N/A"}</div>
-          <Link to={"/"}><div className="mt-2 mt-2 btn btn-secondary">HOME</div></Link>
+          <button className="mt-2 btn btn-primary" onClick={() => addCookie(jacket.product_id)}>ADD TO CART</button>
           <br/>
-          <Link to={"/cart"}><button className="mt-2 btn btn-primary" onClick={() => addCookie(jacket.product_id)}>ADD TO CART</button></Link>
+          <Link to={"/"}><button className="mt-2 mt-2 btn btn-secondary">HOME</button></Link>
+          <br/>
+          <Link to={"/cart"}><button className="mt-2 mt-2 btn btn-secondary">CART</button></Link>
 </div>
       </div>
     </>

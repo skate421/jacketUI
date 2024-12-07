@@ -77,6 +77,7 @@ export default function Signup(){
           <Link to="/" className="btn btn-outline-secondary ms-3">Cancel</Link>
         </form>
         </div>
+        <p className="mt-4 text-center">Have an account? <Link to="/login">Login</Link>.</p>
       </>
   )
 }

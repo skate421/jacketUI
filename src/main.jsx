@@ -11,6 +11,8 @@ import Cart from './routes/Cart';
 import Checkout from './routes/Checkout';
 import Confirmation from './routes/Confirmation';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 const router = createBrowserRouter([
   {

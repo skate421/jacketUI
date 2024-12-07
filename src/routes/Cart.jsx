@@ -3,18 +3,25 @@ import CartCard from '../CartCard'
 import {useCookies} from 'react-cookie';
 import { Link } from 'react-router-dom';
 
+
 export default function Cart(){
   const [jackets, setJackets] = useState([]) //Initialize as empty array
-  const [cookies] = useCookies(['item']);
+  const [cookies, setCookie, removeCookie] = useCookies(['item']);
   const apiHost = import.meta.env.VITE_API_HOST;
   const apiUrl = apiHost + '/api/jacket/products/';
 
   useEffect(() => {
     async function fetchData() {
       if (!cookies.item) return;
+      var cookArray = [cookies.item];
 
       //Split comma separated cookies
-      const cookArray = cookies.item.split(',');
+      for(var i = 0; i < (cookies.item).length;i++){
+        if(cookies.item[i] ==','){
+          cookArray = cookies.item.split(',');
+          break;
+        }
+      }
 
       const counts = {};
       //count amount of repeated product ids
@@ -55,6 +62,16 @@ export default function Cart(){
     return total + jacket.cost * jacket.quantity;
   }, 0);
 
+  const tax = .15;
+
+  const total = (totalCost * tax) + totalCost;
+
+  function deleteCookie() {
+    if (!cookies.item) return;
+    removeCookie('item');
+    setJackets([]);
+  }
+
     return(
         <>
         <h2 className="text-center mt-3 mb-4">CART</h2>
@@ -73,9 +90,14 @@ export default function Cart(){
             <p>Your cart is empty</p>
         }
         </div>
-        <h5 className="mt-3">TOTAL: ${totalCost.toFixed(2)}</h5>
-        <Link to="/" className="btn btn-secondary mt-1"><h5>Continute shopping</h5></Link> 
-        <Link to="/checkout" className="btn btn-primary mt-2"><h5>Checkout</h5></Link>
+        <h5 className="mt-1">TAX: ${tax}</h5>
+        <h5>TOTAL W/O TAX: ${totalCost.toFixed(2)}</h5>
+        <h2 className="mt-1">TOTAL: ${total.toFixed(2)}</h2>
+        <div className="d-flex flex-wrap">
+          <Link to="/" className="btn btn-secondary mx-1"><h5>Continute shopping</h5></Link> 
+          <Link to="/checkout" className="btn btn-primary mx-1"><h5>Checkout</h5></Link>
+          <button onClick={deleteCookie}  className="btn btn-danger mx-1"><h5>Empty Cart</h5></button>
+        </div>
         </div>
         </>
     )

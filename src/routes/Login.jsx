@@ -1,67 +1,57 @@
-import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
-export default function Login(){
-  // API URL
-  const apiHost = import.meta.env.VITE_API_HOST;
-  const apiUrl = apiHost + "/api/jacket/users/login";
-
+export default function Login() {
+ 
   // react-hook-form
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // Add new user to API
-  function loginUser(data){
-    //e.preventDefault();
+  const [loginFail, setLoginFail] = useState(false);
 
-    console.log(data);
-    
-    // Create form
-    const formData = new FormData();
-    formData.append('first_name', data.first_name);
-    formData.append('last_name', data.last_name);
-    formData.append('password', data.password);
-    formData.append('email', data.email);
-    
-    // Post data to API
-    async function postData() {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        body: formData,
-      }); 
+  // form submit function
+  async function formSubmit(data) {
+    const apiHost = import.meta.env.VITE_API_HOST;
+    const url = apiHost + "/api/jacket/users/login";
 
-      if(response.ok){
-        window.location.href = '/login';       
-      } else { 
-        // to-do: handle error        
-      }
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data),
+      credentials: 'include' // make fetch include cookies in the request
+    });
+
+    if(response.ok){
+      window.location.href = '/'; // redirect to home page
     }
-
-    postData();
+    else {
+      setLoginFail(true);
+    }
   }
-
+  
   return (
     <>
       <h2 className="text-center mt-3 mb-4">LOGIN</h2>
       <div className="d-flex justify-content-center">
-      <form onSubmit={handleSubmit(loginUser)} method="post" encType="multipart/form-data">
-
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input {...register("email", {required: true})} 
-            type="email" 
-            className="form-control bg-light" />              
-            {errors.email && <span className="text-danger">Invalid email</span>}
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Password</label>
-            <input {...register("password", {required: true})} type="password" className="form-control bg-light" />
-            {errors.password && <span className="text-danger">Invalid password</span>}
-          </div>   
-          <button type="submit" className="btn btn-primary">signup</button>
-          <Link to="/" className="btn btn-outline-secondary ms-3">Cancel</Link>
-        </form>
+      {loginFail && <p className="text-danger">Incorrect username or password.</p>}
+      <form onSubmit={handleSubmit(formSubmit)} method="post" encType="multipart/form-data">
+        <div className="mb-3">
+          <label className="form-label">Email</label>
+          <input {...register("email", { required: "Email is required." })} type="email" className="form-control bg-light" />
+          {errors.email && <span className="text-danger">{errors.email.message}</span>}
         </div>
-      </>
+        <div className="mb-3">
+          <label className="form-label">Password</label>
+          <input {...register("password", { required: "Password is required." })} type="password" className="form-control bg-light" />
+          {errors.password && <span className="text-danger">{errors.password.message}</span>}
+        </div>
+        <button type="submit" className="btn btn-primary">Login</button>
+        <Link to="/" className="btn btn-outline-dark ms-2">Cancel</Link>
+      </form>
+      </div>
+      <p className="mt-4 text-center">Don't have an account? <Link to="/signup">Sign-up</Link> now.</p>
+    </>
   )
 }
