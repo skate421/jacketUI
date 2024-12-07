@@ -25,9 +25,9 @@ export default function Card(props){
                                     <br/>
                                     Quantity: {props.jacket.quantity}
                                     <br/>
-                                    Sub-total w/o tax: ${(subTotal).toFixed(2)}
-                                    <br/>
                                     Tax: ${subTax.toFixed(2)}
+                                    <br/>
+                                    Sub-total w/o tax: ${(subTotal).toFixed(2)}
                                     <br/>
                                     <h5>Sub-total: ${(subTax + subTotal).toFixed(2)}</h5>
                                 </p>
